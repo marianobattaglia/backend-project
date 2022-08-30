@@ -1,0 +1,16 @@
+{
+  "name": "backend-project",
+  "version": "0.0.1",
+  "description": "Backend project for course",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Mariano Martín Battaglia",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
