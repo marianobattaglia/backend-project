@@ -34,7 +34,7 @@ class CartManager {
   };
 
   // SAVE cart
-  saveCart = () => {
+  saveCart = (object) => {
     try {
       let cartList = this.getAll();
       // If there is a cartList created, create a new element and store it

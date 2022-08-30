@@ -4,6 +4,54 @@ Ecommerce project developed for the backend course. Commision 32080.
 
 ---
 
+## Ejecutar aplicación:
+
+Desde la terminal realizar los siguientes pasos:
+
+1. Clonar repositorio
+
+### `git clone https://github.com/marianobattaglia/backend-project.git`
+
+2. Ingresar dentro de la carpeta del proyecto
+
+### `cd backend-project`
+
+3. Instalar dependencias
+
+### `npm install`
+
+3. Ejecutar node:
+
+### `npm start`
+
+---
+
+## Para pegada de servicios
+
+### Estructura Producto
+
+<pre><code>{
+    "name": "Producto nuevo",
+    "description": "Este es un nuevo producto",
+    "code": 1005,
+    "thumbnail": "https://",
+    "price": 2000,
+    "stock": 15
+}</code></pre>
+
+### Estructura Carrito
+
+<pre><code>{
+    "name": "Producto nuevo",
+    "description": "Este es un nuevo producto",
+    "code": 1005,
+    "thumbnail": "https://",
+    "price": 2000,
+    "stock": 15
+}</code></pre>
+
+---
+
 # Consignas del trabajo
 
 ## PRIMER ENTREGA

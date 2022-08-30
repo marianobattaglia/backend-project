@@ -1,82 +1,84 @@
-// ---- IMPORTS ----
-// Libraries
+/* ---- IMPORTS ---- */
+/* Libraries */
 const fs = require("fs");
 const express = require("express");
-// Classes
-const FileManager = require("./src/FileManager");
-const CartManager = require("./src/CartManager");
+/* Classes */
+const ProductManager = require("./src/productManager");
+const CartManager = require("./src/cartManager");
 
-// ---- FileSystem ----
+/* ---- FileSystem ---- */
 const productsRoute = "./public/fileSystem/products.txt";
 const cartRoute = "./public/fileSystem/cart.txt";
 
-// ---- File Management Classes ----
-const fileManager = new FileManager(productsRoute);
+/* ---- File Management Classes ---- */
+const fileManager = new ProductManager(productsRoute);
 const cartManager = new CartManager(cartRoute);
 
-// ---- Express Server initialization ----
+/* ---- Express Server initialization ---- */
 const PORT = process.env.PORT || 8080;
 const app = express();
-
-// ---- Middleware para lectura de Json desde servidor ----
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ---- Routers Config ----
+/* ---- Routers Config ---- */
 const { Router } = express;
-// Products
+/* Products */
 const routerProducts = Router();
 app.use("/api/productos", routerProducts);
-// Carts
-const routerShopCart = Router();
-app.use("/api/carrito", routerShopCart);
-
-//Middleware para acceso a carpeta public
+/* Carts */
+const routerCarts = Router();
+app.use("/api/carritos", routerCarts);
 app.use("/public", express.static(__dirname + "/public"));
-
-// ---- Server Initialization ----
-const server = app.listen(PORT, () => {
-  console.log(`Server Listening on ${server.address().port}`);
-});
-
-// ---- Error Manager ----
-server.on("error", (error) => console.log(`Error on Server: ${error}`));
-
-// ---- Administrator Manager ----
-let isAdmin = true;
-
-// ---- HTML Route ----
+/* HTML Route */
 app.get("/public", (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
 });
 
-// ##############################################################################
+/* ---- Server Initialization ---- */
+const server = app.listen(PORT, () => {
+  console.log(`Server Listening on ${server.address().port}`);
+});
+/* Error Manager */
+server.on("error", (error) => console.log(`Error on Server: ${error}`));
+
+/* ---- Administrator Manager ---- */
+let isAdministrator = true; /* Will be configured later with a login feature */
+
+let bodyRequirements = [
+  "name",
+  "description",
+  "code",
+  "thumbnail",
+  "price",
+  "stock",
+];
+
 // ##############################################################################
 // ##############################################################################
 
-// ---- Products ----
+/* ---- Products ---- */
 
-// GET all Products
+/* GET all Products */
 routerProducts.get("/", (req, res) => {
   let products = fileManager.getAll();
   res.json(products);
 });
 
-// GET product by ID
+/* GET product by ID */
 routerProducts.get("/:id", (req, res) => {
   const { id } = req.params;
   let productFound = fileManager.getById(id);
   res.json(productFound);
 });
 
-// POST product (Only works for Administrator)
+/* POST product (Only works for Administrator) */
 routerProducts.post(
   "/",
   (req, res, next) => {
-    if (!isAdmin) {
+    if (!isAdministrator) {
       res.send({
         error: -1,
-        descripcion: `ruta ${req.baseUrl} método ${req.method} no autorizada`,
+        descripcion: `Route ${req.baseUrl} method ${req.method} unautorized.`,
       });
     } else {
       next();
@@ -84,29 +86,31 @@ routerProducts.post(
   },
   (req, res) => {
     const { body } = req;
-    //Check de si estan todas las props necesarias
-    //let keys = Object.keys(body);
-    //let check = (arr, target) => target.every((e) => arr.includes(e));
-    //let validation = check(keys, necessaryProps);
+    //Body params control from request
+    let keys = Object.keys(body);
+    let matchParams = (arr, target) => target.every((e) => arr.includes(e));
+    let validatedObject = matchParams(keys, bodyRequirements);
 
-    //if (validation) {
-    fileManager.saveProduct(body);
-    let products = fileManager.getAll();
-    res.json(products);
-    //} else {
-    //  res.json("Las props no son iguales");
-    //}
+    if (validatedObject) {
+      fileManager.saveProduct(body);
+      let products = fileManager.getAll();
+      res.json(products);
+    } else {
+      res.json(
+        `The object you are trying to upload does not meet the requirements. Remember to send the required parameters: ${bodyRequirements}.`
+      );
+    }
   }
 );
 
-// PUT product
+/* PUT product */
 routerProducts.put(
   "/:id",
   (req, res, next) => {
-    if (!isAdmin) {
+    if (!isAdministrator) {
       res.send({
         error: -1,
-        descripcion: `ruta ${req.baseUrl} método ${req.method} no autorizada`,
+        descripcion: `Route ${req.baseUrl} method ${req.method} unautorized.`,
       });
     } else {
       next();
@@ -115,19 +119,19 @@ routerProducts.put(
   (req, res) => {
     const { id } = req.params;
     const { body } = req;
-    let puttedProduct = fileManager.updateById(id, body);
-    res.json(puttedProduct);
+    let updatedProduct = fileManager.updateById(id, body);
+    res.json(updatedProduct);
   }
 );
 
-// DELETE product by ID
+/* DELETE product by ID */
 routerProducts.delete(
   "/:id",
   (req, res, next) => {
-    if (!isAdmin) {
+    if (!isAdministrator) {
       res.send({
         error: -1,
-        descripcion: `ruta ${req.baseUrl} método ${req.method} no autorizada`,
+        descripcion: `Route ${req.baseUrl} method ${req.method} unautorized.`,
       });
     } else {
       next();
@@ -142,31 +146,30 @@ routerProducts.delete(
 
 // ##############################################################################
 // ##############################################################################
-// ##############################################################################
 
-// ---- Carts ----
+/* ---- Carts ---- */
 
-// GET Carts
-routerShopCart.get("/:id", (req, res) => {
+/* GET Carts */
+routerCarts.get("/:id", (req, res) => {
   const { id } = req.params;
   res.json(id);
 });
 
-// POST Cart
-routerShopCart.post("/", (req, res) => {
+/* POST Cart */
+routerCarts.post("/", (req, res) => {
   let newCart = cartManager.saveCart();
   res.json(newCart);
 });
 
-// DELETE Cart by ID
-routerShopCart.delete("/:id", (req, res) => {
+/* DELETE Cart by ID */
+routerCarts.delete("/:id", (req, res) => {
   const { id } = req.params;
   let cartList = cartManager.deleteCartById(id);
   res.json(cartList);
 });
 
-// GET Cart by ID
-routerShopCart.get("/:id/productos", (req, res) => {
+/* GET Cart by ID */
+routerCarts.get("/:id/productos", (req, res) => {
   const { id } = req.params;
   let cartProducts = cartManager.getCartById(id);
 
@@ -181,8 +184,8 @@ routerShopCart.get("/:id/productos", (req, res) => {
   }
 });
 
-// POST Products to Cart by ID
-routerShopCart.post("/:id/productos", (req, res) => {
+/* POST Products to Cart by ID */
+routerCarts.post("/:id/productos", (req, res) => {
   const { id } = req.params;
   const { body } = req;
 
@@ -197,53 +200,20 @@ routerShopCart.post("/:id/productos", (req, res) => {
   }
 });
 
-// DELETE Products in Cart by ID
-routerShopCart.delete("/:id/productos/:id_prod", (req, res) => {
+/* DELETE Products in Cart by ID */
+routerCarts.delete("/:id/productos/:id_prod", (req, res) => {
   const { id, id_prod } = req.params;
   let newCartList = cartManager.deleteProdInCart(id, id_prod);
   res.json(newCartList);
 });
 
-///////// ESTRUCTURA DE PRODUCTO
-// let product = {
-//   id: 1,
-//   timestamp: new Date(),
-//   name: "producto1",
-//   description: "es un buen producto",
-//   code: 123,
-//   thumbnail: "www.google.com",
-//   price: 120,
-//   stock: 100,
-// };
+// ##############################################################################
+// ##############################################################################
 
-///////// ESTRUCTURA DE CARRITO
-// let product = {
-//   id: 1,
-//   timestamp: new Date(),
-//   products: [{
-// //   id: 1,
-// //   timestamp: new Date(),
-// //   name: "product1"
-// //   description: "es un buen producto",
-// //   code: 123,
-// //   thumbnail: "www.google.com",
-// //   price: 120,
-// //   stock: 100,
-//      }]
-// };
-
-let necessaryProps = [
-  "name",
-  "description",
-  "code",
-  "thumbnail",
-  "price",
-  "stock",
-];
-
+/* ---- Code 404 response ---- */
 app.all("*", (req, res) => {
   res.status(404).json({
     error: -1,
-    descripcion: `ruta ${req.url} método ${req.method} no autorizada`,
+    descripcion: `Route ${req.baseUrl} method ${req.method} unautorized.`,
   });
 });

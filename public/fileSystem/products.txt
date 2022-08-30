@@ -28,5 +28,85 @@
     "thumbnail": "https://katech.com.ar/wp-content/uploads/NOT318.jpg",
     "price": 2000,
     "stock": 15
+  },
+  {
+    "id": 4,
+    "timestamp": "2022-08-30T22:45:27.518Z",
+    "name": "Macbook Pro M1",
+    "description": "Macbook Pro M1 8gb 512gb",
+    "code": 1003,
+    "thumbnail": "https://katech.com.ar/wp-content/uploads/NOT318.jpg",
+    "price": 2000,
+    "stock": 15
+  },
+  {
+    "id": 5,
+    "timestamp": "2022-08-30T22:45:27.520Z",
+    "name": "Macbook Pro M1",
+    "description": "Macbook Pro M1 8gb 512gb",
+    "code": 1003,
+    "thumbnail": "https://katech.com.ar/wp-content/uploads/NOT318.jpg",
+    "price": 2000,
+    "stock": 15
+  },
+  {
+    "id": 6,
+    "timestamp": "2022-08-30T22:46:07.190Z",
+    "name": "Producto nuevo",
+    "description": "Este es un nuevo producto",
+    "code": 1005,
+    "thumbnail": "https://",
+    "price": 2000,
+    "stock": 15
+  },
+  {
+    "id": 7,
+    "timestamp": "2022-08-30T22:46:07.191Z",
+    "name": "Producto nuevo",
+    "description": "Este es un nuevo producto",
+    "code": 1005,
+    "thumbnail": "https://",
+    "price": 2000,
+    "stock": 15
+  },
+  {
+    "id": 8,
+    "timestamp": "2022-08-30T22:47:39.117Z",
+    "name": "Producto nuevo",
+    "description": "Este es un nuevo producto",
+    "code": 1005,
+    "thumbnail": "https://",
+    "price": 2000,
+    "stock": 15
+  },
+  {
+    "id": 9,
+    "timestamp": "2022-08-30T22:47:49.787Z",
+    "name": "Producto nuevo",
+    "description": "Este es un nuevo producto",
+    "code": 1005,
+    "thumbnail": "https://",
+    "price": 2000,
+    "stock": 15
+  },
+  {
+    "id": 10,
+    "timestamp": "2022-08-30T23:09:13.248Z",
+    "name": "Producto modificado",
+    "description": "Este es un nuevo modificado",
+    "code": 1005,
+    "thumbnail": "https://",
+    "price": 2000,
+    "stock": 0
+  },
+  {
+    "id": 11,
+    "timestamp": "2022-08-30T23:44:18.562Z",
+    "name": "Producto nuevo",
+    "description": "Este es un nuevo producto",
+    "code": 1005,
+    "thumbnail": "https://",
+    "price": 2000,
+    "stock": 15
   }
 ]

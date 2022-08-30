@@ -47,7 +47,7 @@ class FileManager {
         productList.push(newObj);
         const productsJson = JSON.stringify(productList, null, 2);
         fs.writeFileSync(this.file, productsJson);
-        console.log(`New product added: ${newObj.title}`);
+        console.log(`New product added: ${newObj.id}`);
         return productList;
       } else {
         // There is no productList stored, create one
