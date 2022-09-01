@@ -26,6 +26,13 @@ Desde la terminal realizar los siguientes pasos:
 
 ---
 
+## Update:
+
+Se realizó Deploy de la App en Glitch, se puede ver desde el siguiente link:
+https://github.com/marianobattaglia/backend-project
+
+---
+
 ## Para pegada de servicios
 
 ### Estructura Producto
