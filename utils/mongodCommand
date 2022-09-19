@@ -1,0 +1,1 @@
+mongod --dbpath "C:\Users\batta\Desktop\Backend\backend-project\data"
