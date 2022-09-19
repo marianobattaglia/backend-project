@@ -8,25 +8,25 @@ Ecommerce project developed for the backend course. Commision 32080.
 
 Desde la terminal realizar los siguientes pasos:
 
-1. Clonar repositorio
+1. **Clonar repositorio**
 
-### `git clone https://github.com/marianobattaglia/backend-project.git`
+`git clone https://github.com/marianobattaglia/backend-project.git`
 
-2. Ingresar dentro de la carpeta del proyecto
+2. **Ingresar dentro de la carpeta del proyecto**
 
-### `cd backend-project`
+`cd backend-project`
 
-3. Instalar dependencias
+3. **Instalar dependencias**
 
-### `npm install`
+`npm install`
 
-1. Ejecutar en simultaneo, en diferentes terminales :
+4. **Ejecutar en simultaneo, en diferentes terminales:**
 
-### `npm start`
+`npm start`
 
-### `mongod --dbpath "\backend-project\data"`
+`mongod --dbpath "\backend-project\data"`
 
-### `mongo`
+`mongo`
 
 ---
 
@@ -37,7 +37,9 @@ https://glitch.com/~infrequent-time-kettle
 
 ---
 
-# Endpoints
+# Cómo utilizar los endpoints
+
+Se detalla a continuación cómo utilizar cada una de las rutas.
 
 ## Productos
 
