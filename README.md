@@ -20,22 +20,40 @@ Desde la terminal realizar los siguientes pasos:
 
 ### `npm install`
 
-3. Ejecutar node:
+1. Ejecutar en simultaneo, en diferentes terminales :
 
 ### `npm start`
+
+### `mongod --dbpath "\backend-project\data"`
+
+### `mongo`
 
 ---
 
 ## Update:
 
 Se realizó Deploy de la App en Glitch, se puede ver desde el siguiente link:
-https://github.com/marianobattaglia/backend-project
+https://glitch.com/~infrequent-time-kettle
 
 ---
 
-## Para pegada de servicios
+# Endpoints
 
-### Estructura Producto
+## Productos
+
+### GET: Leer todos los productos
+
+`http://localhost:8080/api/productos/`
+
+### GET: Leer producto por "id"
+
+`http://localhost:8080/api/productos/:id`
+
+### POST: Crear un nuevo producto
+
+`http://localhost:8080/api/productos/`
+
+Se debe pasar un body con el siguiente formato:
 
 <pre><code>{
     "name": "Producto nuevo",
@@ -46,16 +64,56 @@ https://github.com/marianobattaglia/backend-project
     "stock": 15
 }</code></pre>
 
-### Estructura Carrito
+### PUT: Modificar un producto por "id"
+
+`http://localhost:8080/api/productos/:id`
+
+Se debe pasar un body con el siguiente formato:
 
 <pre><code>{
-    "name": "Producto nuevo",
-    "description": "Este es un nuevo producto",
+    "name": "Producto modificado",
+    "description": "Este es un producto modificado",
     "code": 1005,
     "thumbnail": "https://",
     "price": 2000,
-    "stock": 15
+    "stock": 0
 }</code></pre>
+
+### DELETE: Eliminar un producto por "id"
+
+`http://localhost:8080/api/productos/:id`
+
+## Carritos
+
+### GET: Leer todos los carritos
+
+`http://localhost:8080/api/carritos/`
+
+### GET: Leer productos de un carrito
+
+`http://localhost:8080/api/carritos/:idCarrito/productos`
+
+### POST: Crear un carrito nuevo
+
+`http://localhost:8080/api/carritos/`
+
+### POST: Insertar un producto al carrito
+
+`http://localhost:8080/api/carritos/:idCart/productos`
+
+Se debe pasar un body con el siguiente formato:
+
+<pre><code>{
+    "id": "6328e028e5e057a1755b98d6"
+}</code></pre>
+
+### DELETE: Eliminar un carrito
+
+`http://localhost:8080/api/carritos/:id`
+
+### DELETE: Eliminar un producto de un carrito
+
+`http://localhost:8080/api/carritos/:idCarrito/productos/:idProducto`
 
 ---
 
@@ -98,3 +156,18 @@ Deberás entregar el estado de avance de tu aplicación **eCommerce Backend**, q
 3. En el caso de requerir una ruta no implementada en el servidor, este debe contestar un objeto de error: ej { error : -2, descripcion: ruta 'x' método 'y' no implementada}
 4. La estructura de programación será ECMAScript, separada tres en módulos básicos (router, lógica de negocio/api y persistencia ). Más adelante implementaremos el desarrollo en capas. Utilizar **preferentemente clases**, constructores de variables let y const y arrow function.
 5. Realizar la prueba de funcionalidad completa en el ámbito local (puerto 8080) y en **glitch.com**
+
+## SEGUNDA ENTREGA
+
+### Consigna:
+
+Basándose en los contenedores ya desarrollados (memoria, archivos) desarrollar dos contenedores más (que cumplan con la misma interfaz) que permitan realizar las operaciones básicas de CRUD en MongoDb (ya sea local o remoto) y en Firebase. Luego, para cada contenedor, crear dos clases derivadas, una para trabajar con Productos, y otra para trabajar con Carritos.
+USAR FIREABASE Y MONGODB (local o remoto como quieras)
+USAR UNA PARA CARRITO Y OTRA PARA PODUCTO (elegir a gusto)
+
+### Aspectos a incluir en el entregable:
+
+1. A las clases derivadas de los contenedores se las conoce como DAOs (Data Access Objects), y pueden ir todas incluidas en una misma carpeta de ‘daos’.
+2. En la carpeta de daos, incluir un archivo que importe todas las clases y exporte una instancia de dao de productos y una de dao de carritos, según corresponda. Esta decisión se tomará en base al valor de una variable de entorno cargada al momento de ejecutar el servidor (opcional: investigar el uso de imports dinámicos).
+3. Incluir un archivo de configuración (config) que contenga los datos correspondientes para conectarse a las bases de datos o medio de persistencia que corresponda.
+4. Hacer lo mismo para bases de datos relacionales: MariaDB/SQLite3 (Opcional).
