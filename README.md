@@ -32,7 +32,7 @@ Desde la terminal realizar los siguientes pasos:
 
 ## Update:
 
-Se realizó Deploy de la App en Glitch, se puede ver desde el siguiente link:
+Se realizó Deploy de la App en Glitch para la **primer entrega del proyecto**, se puede ver desde el siguiente link:
 https://glitch.com/~infrequent-time-kettle
 
 ---
