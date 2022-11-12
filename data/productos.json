@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Iphone 11",
+    "price": "600",
+    "thumbnail": "https://www.techinn.com/f/13735/137354153/apple-iphone-11-64gb-6.1.jpg",
+    "id": 1
+  },
+  {
+    "title": "Iphone 13",
+    "price": "1239",
+    "thumbnail": "https://c8.alamy.com/compes/2gky2x4/antalya-turquia-15-de-septiembre-de-2021-recien-lanzado-iphone-13-starlight-color-mockup-sistema-con-angulos-de-la-parte-trasera-y-delantera-2gky2x4.jpg",
+    "id": 2
+  },
+  {
+    "title": "Macbook",
+    "price": "1500",
+    "thumbnail": "https://cdn.pocket-lint.com/r/s/x1920/assets/images/161396-laptops-review-hands-on-macbook-air-review-image1-v2jzcb3rqd.jpg",
+    "id": 3
+  }
+]
