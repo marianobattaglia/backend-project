@@ -1,32 +1,93 @@
-/* ---- IMPORTS ---- */
-/* Libraries */
+/* ---- Imports ---- */
 const express = require("express");
+const session = require("express-session");
+const expbs = require("express-handlebars");
+require("dotenv").config({ path: "./config/.env" });
+const { Server: HttpServer } = require("http");
+const { Server: IOServer } = require("socket.io");
+const path = require("path");
+const routes = require("./routers/index");
+const passport = require("passport");
 
-/* ---- Express Server initialization ---- */
-const PORT = process.env.PORT || 8080;
 const app = express();
+const httpServer = new HttpServer(app);
+const io = new IOServer(httpServer);
+
+/* ---- MongoAtlas: for data persistance ---- */
+const MongoStore = require("connect-mongo");
+const adavancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
+
+/* ---- Session config ---- */
+app.use(
+  session({
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGOATLAS,
+      mongoOptions: adavancedOptions,
+    }),
+    cookie: {
+      httpOnly: false,
+      secure: false,
+      maxAge: 3000,
+    },
+    secret: "secreto",
+    rolling: true,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
+/* ---- Middlewares ---- */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static("./views/layouts"));
+app.use("/", routes);
 
-/* ---- Routers Config ---- */
-/* Products */
-const routerProducts = require("./routers/product");
-app.use("/api/productos", routerProducts);
-/* Carts */
-const routerCarts = require("./routers/cart");
-app.use("/api/carritos", routerCarts);
+/* ---- Handlebars (como motor de plantillas) ---- */
+app.engine(
+  "hbs",
+  expbs.engine({
+    defaultLayout: "main",
+    partialsDir: path.join(__dirname, "views/partials"),
+    extname: ".hbs",
+  })
+);
+app.set("views", "./views");
+app.set("views engine", "hbs");
 
-/* ---- Server Initialization ---- */
-const server = app.listen(PORT, () => {
-  console.log(`Server Listening on PORT ${server.address().port}`);
-});
-/* Error Manager */
-server.on("error", (error) => console.log(`Error on Server: ${error}`));
+/* ---- Chat ---- */
+const ApiChat = require("./api/apiChat");
+const apiChat = new ApiChat();
+let messages = [];
 
-/* ---- Code 404 response ---- */
-app.all("*", (req, res) => {
-  res.status(404).json({
-    error: -1,
-    descripcion: `Route ${req.baseUrl} method ${req.method} unautorized.`,
+io.on("connection", async (socket) => {
+  let messagesToEmit = await apiChat.readChatFromFile();
+
+  messages.splice(0, messages.length);
+  for (const m of messagesToEmit) {
+    messages.push(m);
+  }
+
+  socket.emit("messages", messagesToEmit);
+
+  socket.on("new-message", (data) => {
+    data.id = messages.length + 1;
+    messages.push(data);
+
+    io.sockets.emit("messages", [data]);
+
+    apiChat.writeChatToFile(messages);
   });
+});
+
+/* ---- Error handler ---- */
+app.use(function (err, req, res, next) {
+  console.log(err.stack);
+  res.status(500).send("Ocurrio un error: " + err);
+});
+
+/* ---- Server ---- */
+httpServer.listen(process.env.PORT || 8080, () => {
+  console.log("SERVER ON");
 });

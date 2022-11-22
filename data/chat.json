@@ -1,0 +1,37 @@
+{
+  "entities": {
+    "author": {
+      "mail@gmail.com": {
+        "id": "mail@gmail.com",
+        "name": "Mariano",
+        "lastname": "Battaglia",
+        "age": "30",
+        "alias": "Mariano",
+        "avatar": "https://media.istockphoto.com/photos/student-using-laptop-having-online-class-with-teacher-picture-id1288092444"
+      },
+      "otro@gmail.com": {
+        "id": "otro@gmail.com",
+        "name": "Pepito",
+        "lastname": "Gomez",
+        "age": 29,
+        "alias": "Pepito",
+        "avatar": "https://"
+      }
+    },
+    "messages": {
+      "1": {
+        "author": "mail@gmail.com",
+        "text": "Mensaje de prueba",
+        "time": "26/9/2022, 19:41:41",
+        "id": 1
+      },
+      "2": {
+        "author": "otro@gmail.com",
+        "text": "Hola como estas?",
+        "time": "26/9/2022, 19:43:54",
+        "id": 2
+      }
+    }
+  },
+  "result": [1, 2]
+}

@@ -1,0 +1,24 @@
+[
+  {
+    "username": "battaglia1902@gmail.com",
+    "password": "12345678",
+    "name": "Mariano Battaglia",
+    "address": "Calle 123",
+    "age": "30",
+    "phone": "+5491134684035",
+    "avatar": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Apple-logo.png",
+    "role": "user",
+    "id": 1
+  },
+  {
+    "username": "prueba1@gmail.com",
+    "password": "12345678",
+    "name": "Prueba1",
+    "address": "Calle 123",
+    "age": "20",
+    "phone": "+5491134684035",
+    "avatar": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Apple-logo.png",
+    "role": "user",
+    "id": 2
+  }
+]
