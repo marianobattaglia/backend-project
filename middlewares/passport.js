@@ -26,8 +26,8 @@ function validPassword(user, password) {
     return done(null, false);
   }
 }
-/* LOGIN PASSPORT */
 
+/* ---- Login Passport ---- */
 function getByUsername(username) {
   try {
     const users = users_contenedor.getAll();
@@ -64,7 +64,7 @@ passport.use(
   })
 );
 
-/* ---- REGISTER PASSPORT ---- */
+/* ---- Register Passport ---- */
 passport.use(
   "signup",
   new LocalStrategy(
